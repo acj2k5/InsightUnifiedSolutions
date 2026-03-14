@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insight Unified Solutions | Network · Security · Infrastructure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0a1628;
+      --navy2:      #0d2044;
+      --navy3:      #112255;
+      --orange:     #FF6B1A;
+      --orange2:    #E8510A;
+      --blue-light: #7BA3CC;
+      --blue-mid:   #4A7FBF;
+      --white:      #ffffff;
+      --gray-light: #F4F6F9;
+      --gray-text:  #334155;
+      --gray-sub:   #64748b;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Barlow', sans-serif; background: var(--white); color: var(--gray-text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,22,40,0.96); backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--orange);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 68px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo-icon { width: 38px; height: 38px; }
+    .nav-logo-text { line-height: 1; }
+    .nav-logo-text .brand { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--white); letter-spacing: 2px; }
+    .nav-logo-text .sub { font-size: 9px; color: var(--orange); letter-spacing: 4px; font-weight: 600; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { background: var(--orange); color: var(--white); padding: 10px 22px; border-radius: 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .nav-cta:hover { background: var(--orange2); transform: translateY(-1px); }
+
+    #hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 68px; }
+    .hero-grid-bg { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(74,127,191,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(74,127,191,0.07) 1px, transparent 1px); background-size: 40px 40px; }
+    .hero-glow { position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(255,107,26,0.12) 0%, transparent 65%); pointer-events: none; }
+    .hero-glow2 { position: absolute; bottom: -150px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(74,127,191,0.10) 0%, transparent 65%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 80px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--orange); }
+    .hero-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(42px, 5vw, 68px); font-weight: 800; line-height: 1.0; color: var(--white); letter-spacing: 1px; margin-bottom: 20px; }
+    .hero-title span { color: var(--orange); }
+    .hero-subtitle { font-size: 16px; line-height: 1.7; color: var(--blue-light); margin-bottom: 36px; font-weight: 300; max-width: 480px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { background: var(--orange); color: var(--white); padding: 14px 30px; border-radius: 4px; font-size: 14px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: var(--orange2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,26,0.35); }
+    .btn-secondary { border: 1.5px solid rgba(255,255,255,0.25); color: var(--white); padding: 14px 30px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+    .btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+    .hero-stats { display: flex; gap: 32px; margin-top: 48px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 800; color: var(--orange); line-height: 1; }
+    .stat-label { font-size: 11px; color: var(--blue-light); letter-spacing: 1px; margin-top: 4px; text-transform: uppercase; }
+    .hero-logo-card { background: rgba(13,32,68,0.7); border: 1px solid rgba(255,107,26,0.2); border-radius: 12px; padding: 48px 40px; backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; gap: 28px; box-shadow: 0 32px 80px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
+    .logo-svg { width: 100%; max-width: 300px; }
+    .hero-badges { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .badge { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 12px 16px; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+    .badge-text { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 400; }
+
+    .powered-band { background: var(--gray-light); border-top: 3px solid var(--orange); border-bottom: 1px solid #e2e8f0; padding: 18px 40px; display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .powered-band .label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gray-sub); }
+    .powered-items { display: flex; gap: 32px; align-items: center; }
+    .powered-item { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+    .powered-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); display: block; }
+
+    section { padding: 90px 40px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .section-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); }
+    .section-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(30px, 4vw, 46px); font-weight: 800; color: var(--navy); line-height: 1.1; margin-bottom: 16px; letter-spacing: 0.5px; }
+    .section-title.light { color: var(--white); }
+    .section-sub { font-size: 16px; color: var(--gray-sub); line-height: 1.6; max-width: 600px; }
+    .section-sub.light { color: var(--blue-light); }
+
+    #services { background: var(--white); }
+    .services-header { margin-bottom: 52px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .services-bottom-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; max-width: calc(66.66% + 10px); margin-left: auto; margin-right: auto; }
+    .service-card { background: var(--white); border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; display: flex; flex-direction: column; }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(10,22,40,0.12); border-color: var(--orange); }
+    .card-header { background: var(--navy); padding: 18px 20px; display: flex; align-items: center; gap: 12px; border-left: 4px solid var(--orange); position: relative; overflow: hidden; }
+    .card-header::after { content: ''; position: absolute; right: -20px; top: -20px; width: 80px; height: 80px; background: rgba(255,107,26,0.08); border-radius: 50%; }
+    .card-icon { width: 36px; height: 36px; border-radius: 6px; background: rgba(255,107,26,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .card-icon svg { width: 18px; height: 18px; stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: 0.5px; }
+    .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .card-desc { font-size: 13px; color: var(--gray-sub); line-height: 1.6; margin-bottom: 16px; }
+    .card-divider { height: 1px; background: #e2e8f0; margin-bottom: 16px; }
+    .card-features { list-style: none; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .card-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--gray-text); line-height: 1.4; }
+    .card-features li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 5px; }
+    .card-cta { margin-top: 20px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+    .card-cta a { display: block; text-align: center; background: var(--navy); color: var(--orange); padding: 10px; border-radius: 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-decoration: none; text-transform: uppercase; transition: background 0.2s; }
+    .card-cta a:hover { background: var(--orange); color: var(--white); }
+
+    #why { background: var(--navy); position: relative; overflow: hidden; }
+    .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 52px; }
+    .why-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 28px 24px; transition: background 0.25s, border-color 0.25s, transform 0.25s; }
+    .why-card:hover { background: rgba(255,107,26,0.07); border-color: rgba(255,107,26,0.3); transform: translateY(-4px); }
+    .why-icon-wrap { width: 48px; height: 48px; border-radius: 10px; background: rgba(255,107,26,0.15); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .why-icon-wrap svg { width: 22px; height: 22px; stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .why-title { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .why-desc { font-size: 13px; color: var(--blue-light); line-height: 1.65; }
+
+    #process { background: var(--gray-light); }
+    .process-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 52px; position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 28px; left: calc(10% + 20px); right: calc(10% + 20px); height: 2px; background: linear-gradient(90deg, var(--orange), var(--blue-mid)); z-index: 0; }
+    .process-step { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+    .step-circle { width: 56px; height: 56px; border-radius: 50%; background: var(--navy); border: 3px solid var(--orange); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--orange); box-shadow: 0 0 0 6px var(--gray-light); transition: background 0.2s, transform 0.2s; }
+    .process-step:hover .step-circle { background: var(--orange); color: var(--white); transform: scale(1.1); }
+    .step-title { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .step-desc { font-size: 12.5px; color: var(--gray-sub); line-height: 1.6; }
+
+    #packages { background: var(--white); }
+    .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; align-items: start; }
+    .pkg-card { border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.25s, box-shadow 0.25s; }
+    .pkg-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(10,22,40,0.12); }
+    .pkg-card.featured { border-color: var(--orange); box-shadow: 0 12px 40px rgba(255,107,26,0.2); transform: scale(1.03); }
+    .pkg-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+    .pkg-header { padding: 28px 28px 24px; background: var(--navy); position: relative; }
+    .pkg-card.featured .pkg-header { background: var(--orange); }
+    .pkg-badge { position: absolute; top: 14px; right: 14px; background: var(--orange); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+    .pkg-card.featured .pkg-badge { background: var(--navy); }
+    .pkg-name { font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+    .pkg-tagline { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .pkg-body { padding: 28px; }
+    .pkg-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .pkg-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--gray-text); line-height: 1.4; }
+    .pkg-features li .check { color: var(--orange); font-weight: 700; font-size: 15px; flex-shrink: 0; margin-top: -1px; }
+    .pkg-features li .dash { color: #cbd5e1; font-weight: 700; font-size: 15px; flex-shrink: 0; }
+    .pkg-cta { display: block; text-align: center; background: var(--navy); color: var(--white); padding: 13px; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-decoration: none; transition: all 0.2s; }
+    .pkg-card.featured .pkg-cta { background: var(--orange); }
+    .pkg-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    #contact { background: var(--navy); position: relative; overflow: hidden; }
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .contact-info p { font-size: 15px; color: var(--blue-light); line-height: 1.7; margin-bottom: 36px; }
+    .contact-details { display: flex; flex-direction: column; gap: 16px; }
+    .contact-detail { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; }
+    .contact-detail svg { width: 18px; height: 18px; stroke: var(--orange); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .contact-detail span { font-size: 14px; color: rgba(255,255,255,0.8); }
+    .contact-form { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 36px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue-light); margin-bottom: 7px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; color: var(--white); font-family: 'Barlow', sans-serif; font-size: 14px; transition: border-color 0.2s, background 0.2s; outline: none; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); background: rgba(255,107,26,0.06); }
+    .form-group select option { background: var(--navy2); color: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit { width: 100%; padding: 14px; background: var(--orange); color: var(--white); border: none; border-radius: 6px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 1px; transition: background 0.2s, transform 0.15s; }
+    .form-submit:hover { background: var(--orange2); transform: translateY(-2px); }
+
+    footer { background: #060e1a; border-top: 2px solid var(--orange); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: 1px; }
+    .footer-brand span { color: var(--orange); }
+    .footer-copy { font-size: 12px; color: var(--blue-light); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 12px; color: var(--blue-light); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.3); } }
+    .hero-eyebrow { animation: fadeIn 0.6s ease both; }
+    .hero-title { animation: fadeUp 0.7s 0.1s ease both; }
+    .hero-subtitle { animation: fadeUp 0.7s 0.2s ease both; }
+    .hero-actions { animation: fadeUp 0.7s 0.3s ease both; }
+    .hero-stats { animation: fadeUp 0.7s 0.4s ease both; }
+    .hero-logo-card { animation: fadeUp 0.8s 0.2s ease both; }
+    .badge-dot { animation: pulse-dot 2s infinite; }
+    .badge:nth-child(2) .badge-dot { animation-delay: 0.4s; }
+    .badge:nth-child(3) .badge-dot { animation-delay: 0.8s; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-bottom-row { max-width: 100%; grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .process-steps::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-content { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px; }
+      .hero-logo-card { display: none; }
+      section { padding: 64px 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-bottom-row { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .pkg-card.featured { transform: none; }
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .powered-band { gap: 20px; }
+      .powered-items { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 38 38" fill="none">
+      <line x1="19" y1="19" x2="28" y2="11" stroke="#FF6B1A" stroke-width="1.4" opacity="0.7"/>
+      <line x1="19" y1="19" x2="28" y2="27" stroke="#FF6B1A" stroke-width="1.4" opacity="0.7"/>
+      <line x1="19" y1="19" x2="8"  y2="19" stroke="#4A7FBF" stroke-width="1.4" opacity="0.7"/>
+      <line x1="19" y1="19" x2="10" y2="28" stroke="#4A7FBF" stroke-width="1.4" opacity="0.5"/>
+      <line x1="28" y1="11" x2="34" y2="15" stroke="#4A7FBF" stroke-width="1" opacity="0.5"/>
+      <line x1="28" y1="27" x2="34" y2="23" stroke="#4A7FBF" stroke-width="1" opacity="0.5"/>
+      <circle cx="8"  cy="19" r="2.5" fill="#4A7FBF" opacity="0.8"/>
+      <circle cx="10" cy="28" r="2"   fill="#4A7FBF" opacity="0.65"/>
+      <circle cx="34" cy="15" r="2.2" fill="#4A7FBF" opacity="0.7"/>
+      <circle cx="34" cy="23" r="2"   fill="#4A7FBF" opacity="0.65"/>
+      <circle cx="28" cy="11" r="3.5" fill="#FF6B1A" opacity="0.9"/>
+      <circle cx="28" cy="27" r="3.5" fill="#FF6B1A" opacity="0.9"/>
+      <circle cx="19" cy="19" r="7"   fill="#0d2044" stroke="#FF6B1A" stroke-width="2"/>
+      <circle cx="19" cy="19" r="3.5" fill="#FF6B1A"/>
+      <circle cx="19" cy="19" r="1.4" fill="white"/>
+    </svg>
+    <div class="nav-logo-text">
+      <div class="brand">INSIGHT</div>
+      <div class="sub">UNIFIED SOLUTIONS</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#packages">Support</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Free Assessment →</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Powered by Ubiquiti</div>
+      <h1 class="hero-title">Enterprise Networks.<br><span>Built for</span><br>Your Business.</h1>
+      <p class="hero-subtitle">We design, install, and support enterprise-grade Ubiquiti systems — from firewall security and WiFi 6 infrastructure to surveillance and access control. All managed from one unified dashboard.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Get a Free Assessment →</a>
+        <a href="#services" class="btn-secondary">View Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Core Services</div></div>
+        <div class="stat-item"><div class="stat-num">1</div><div class="stat-label">Unified Dashboard</div></div>
+        <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Premium Support</div></div>
+      </div>
+    </div>
+    <div class="hero-logo-card">
+      <svg class="logo-svg" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+
+        <line x1="48" y1="40" x2="63" y2="26" stroke="#FF6B1A" stroke-width="1.3" opacity="0.65"/>
+        <line x1="48" y1="40" x2="63" y2="54" stroke="#FF6B1A" stroke-width="1.3" opacity="0.65"/>
+        <line x1="48" y1="40" x2="30" y2="40" stroke="#4A7FBF" stroke-width="1.3" opacity="0.65"/>
+        <line x1="48" y1="40" x2="32" y2="54" stroke="#4A7FBF" stroke-width="1.3" opacity="0.5"/>
+        <line x1="63" y1="26" x2="74" y2="32" stroke="#4A7FBF" stroke-width="1" opacity="0.45"/>
+        <line x1="63" y1="54" x2="74" y2="48" stroke="#4A7FBF" stroke-width="1" opacity="0.45"/>
+        <circle cx="30" cy="40" r="3"   fill="#4A7FBF" opacity="0.8"/>
+        <circle cx="32" cy="54" r="2.5" fill="#4A7FBF" opacity="0.65"/>
+        <circle cx="74" cy="32" r="2.5" fill="#4A7FBF" opacity="0.7"/>
+        <circle cx="74" cy="48" r="2.5" fill="#4A7FBF" opacity="0.65"/>
+        <circle cx="63" cy="26" r="4.5" fill="#FF6B1A" opacity="0.9"/>
+        <circle cx="63" cy="54" r="4.5" fill="#FF6B1A" opacity="0.9"/>
+        <circle cx="48" cy="40" r="9"   fill="#0d2044" stroke="#FF6B1A" stroke-width="2"/>
+        <circle cx="48" cy="40" r="5"   fill="#FF6B1A"/>
+        <circle cx="48" cy="40" r="2"   fill="white"/>
+        <text x="92" y="48" font-family="'Barlow Condensed', sans-serif" font-size="28" font-weight="800" fill="white" letter-spacing="3">INSIGHT</text>
+        <rect x="92" y="52" width="195" height="1.5" fill="#FF6B1A"/>
+        <text x="94" y="65" font-family="'Barlow Condensed', sans-serif" font-size="13" font-weight="600" fill="#FF6B1A" letter-spacing="5">UNIFIED SOLUTIONS</text>
+      </svg>
+      <div class="hero-badges">
+        <div class="badge"><div class="badge-dot"></div><span class="badge-text">Enterprise Ubiquiti UniFi Ecosystem</span></div>
+        <div class="badge"><div class="badge-dot"></div><span class="badge-text">Single-pane-of-glass management</span></div>
+        <div class="badge"><div class="badge-dot"></div><span class="badge-text">Scalable from small office to campus</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="powered-band">
+  <span class="label">Solutions We Deliver</span>
+  <div class="powered-items">
+    <div class="powered-item">Firewall & Security</div>
+    <div class="powered-item">Network Infrastructure</div>
+    <div class="powered-item">Surveillance</div>
+    <div class="powered-item">IP Cameras</div>
+    <div class="powered-item">Access Control</div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <div class="section-eyebrow">What We Offer</div>
+      <h2 class="section-title">Complete Technology Solutions<br>for Your Business</h2>
+      <p class="section-sub">We design, install, and support enterprise-grade Ubiquiti systems tailored to your needs — from small offices to large campuses.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="card-title">Firewall & Security</div></div>
+        <div class="card-body"><p class="card-desc">Enterprise firewall protection powered by Ubiquiti UniFi Dream Machine Pro. Keep threats out and your network safe.</p><div class="card-divider"></div><ul class="card-features"><li>Deep Packet Inspection (DPI)</li><li>IDS/IPS Threat Detection</li><li>VLAN Segmentation & Isolation</li><li>VPN Remote Access (WireGuard/OpenVPN)</li><li>Real-time traffic monitoring</li></ul><div class="card-cta"><a href="#contact">Contact us for a free estimate</a></div></div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5" y2="16"/><line x1="12" y1="8" x2="19" y2="16"/></svg></div><div class="card-title">Network Infrastructure</div></div>
+        <div class="card-body"><p class="card-desc">High-performance wired and wireless networking with Ubiquiti UniFi switches and access points built for reliability.</p><div class="card-divider"></div><ul class="card-features"><li>Managed PoE switching (8–48 port)</li><li>WiFi 6 / 6E Access Points</li><li>Seamless roaming across all APs</li><li>Centralized UniFi Controller</li><li>Guest network with captive portal</li></ul><div class="card-cta"><a href="#contact">Contact us for a free estimate</a></div></div>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div><div class="card-title">Surveillance Systems</div></div>
+        <div class="card-body"><p class="card-desc">End-to-end video surveillance with Ubiquiti UniFi Protect — smart motion alerts and secure local storage.</p><div class="card-divider"></div><ul class="card-features"><li>4K / 2K IP camera support</li><li>AI-powered motion detection</li><li>Local NVR / Local Storage</li><li>Remote live view from any device</li><li>Customizable detection zones</li></ul><div class="card-cta"><a href="#contact">Contact us for a free estimate</a></div></div>
+      </div>
+    </div>
+    <div class="services-bottom-row">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></div><div class="card-title">IP Camera Solutions</div></div>
+        <div class="card-body"><p class="card-desc">Indoor and outdoor cameras for every environment. Dome, bullet, fisheye, and PTZ options available.</p><div class="card-divider"></div><ul class="card-features"><li>Weatherproof IP67-rated cameras</li><li>Wide-angle & PTZ zoom</li><li>Night vision / IR up to 100ft</li><li>Facial & plate recognition</li><li>30+ day footage retention</li></ul><div class="card-cta"><a href="#contact">Contact us for a free estimate</a></div></div>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="card-header"><div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="card-title">Access Control</div></div>
+        <div class="card-body"><p class="card-desc">Secure every door with Ubiquiti UniFi Access. Manage who enters where and when — from one dashboard.</p><div class="card-divider"></div><ul class="card-features"><li>Key card, PIN & mobile unlock</li><li>Scheduled access permissions</li><li>Complete entry/exit audit logs</li><li>Integration with UniFi cameras</li><li>Visitor management & intercom</li></ul><div class="card-cta"><a href="#contact">Contact us for a free estimate</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="hero-grid-bg"></div><div class="hero-glow"></div>
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="reveal">
+      <div class="section-eyebrow">Why Choose Us</div>
+      <h2 class="section-title light">Certified Professionals<br>Committed to Your Success</h2>
+      <p class="section-sub light">We source genuine Ubiquiti equipment directly, ensuring warranty coverage and the latest firmware — backed by expert support.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1"><div class="why-icon-wrap"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="why-title">Certified Experts</div><div class="why-desc">Ubiquiti-trained technicians with years of real-world deployment experience across industries.</div></div>
+      <div class="why-card reveal reveal-delay-2"><div class="why-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="why-title">Fast Deployment</div><div class="why-desc">We plan and execute installations to minimize downtime and get you up and running fast.</div></div>
+      <div class="why-card reveal reveal-delay-3"><div class="why-icon-wrap"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div class="why-title">Ongoing Support</div><div class="why-desc">Remote monitoring, firmware updates, and live support to keep your systems running at peak performance.</div></div>
+      <div class="why-card reveal reveal-delay-4"><div class="why-icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="why-title">Unified Dashboard</div><div class="why-desc">Cameras, switches, APs, and door controllers — all managed from one powerful UniFi controller interface.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow" style="justify-content:center;">Our Simple Process</div>
+      <h2 class="section-title" style="text-align:center;">From Consultation to Ongoing Support</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">We make it simple to get started. Here's how we work with you every step of the way.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal reveal-delay-1"><div class="step-circle">1</div><div class="step-title">Consultation</div><div class="step-desc">We assess your space and security needs — free of charge, no obligation.</div></div>
+      <div class="process-step reveal reveal-delay-2"><div class="step-circle">2</div><div class="step-title">Custom Design</div><div class="step-desc">We design a system tailored to your layout and budget.</div></div>
+      <div class="process-step reveal reveal-delay-3"><div class="step-circle">3</div><div class="step-title">Installation</div><div class="step-desc">Certified techs install everything cleanly and efficiently.</div></div>
+      <div class="process-step reveal reveal-delay-4"><div class="step-circle">4</div><div class="step-title">Training</div><div class="step-desc">We walk you through your new system until you're comfortable.</div></div>
+      <div class="process-step reveal reveal-delay-4"><div class="step-circle">5</div><div class="step-title">Ongoing Support</div><div class="step-desc">Remote monitoring and support to keep everything running smoothly.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="packages" style="background:var(--gray-light);">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-eyebrow" style="justify-content:center;">Support Packages</div>
+      <h2 class="section-title" style="text-align:center;">Choose the Right Coverage</h2>
+      <p class="section-sub" style="margin:0 auto;text-align:center;">All support contracts are customized to your installed system. Choose the coverage level and term that fits your needs.</p>
+    </div>
+    <div class="packages-grid">
+      <div class="pkg-card reveal reveal-delay-1">
+        <div class="pkg-header"><div class="pkg-name">Basic</div><div class="pkg-tagline">Essential coverage for smaller deployments</div></div>
+        <div class="pkg-body"><ul class="pkg-features"><li><span class="check">✓</span> Email / Ticket support</li><li><span class="check">✓</span> Next business day response</li><li><span class="check">✓</span> Remote troubleshooting</li><li><span class="dash">—</span> Firmware & config updates</li><li><span class="dash">—</span> On-site visits</li><li><span class="dash">—</span> System health monitoring</li><li><span class="dash">—</span> After-hours emergency support</li><li><span class="check">✓</span> Monthly or Annual contract</li></ul><a href="#contact" class="pkg-cta">Contact Us for Pricing</a></div>
+      </div>
+      <div class="pkg-card reveal reveal-delay-2">
+        <div class="pkg-header"><div class="pkg-name">Standard</div><div class="pkg-tagline">Enhanced support for growing businesses</div></div>
+        <div class="pkg-body"><ul class="pkg-features"><li><span class="check">✓</span> Phone + Email support</li><li><span class="check">✓</span> Response within 4 hours</li><li><span class="check">✓</span> Remote troubleshooting</li><li><span class="check">✓</span> Firmware & config updates</li><li><span class="check">✓</span> Up to 2 on-site visits/year</li><li><span class="check">✓</span> System health monitoring</li><li><span class="dash">—</span> After-hours emergency support</li><li><span class="check">✓</span> Monthly / 6-Month / Annual</li></ul><a href="#contact" class="pkg-cta">Contact Us for Pricing</a></div>
+      </div>
+      <div class="pkg-card featured reveal reveal-delay-3">
+        <div class="pkg-header"><span class="pkg-badge">Most Popular</span><div class="pkg-name">Premium</div><div class="pkg-tagline">Full coverage for mission-critical environments</div></div>
+        <div class="pkg-body"><ul class="pkg-features"><li><span class="check">✓</span> Phone, Email & Chat support</li><li><span class="check">✓</span> Response within 1 hour</li><li><span class="check">✓</span> Remote troubleshooting</li><li><span class="check">✓</span> Firmware & config updates</li><li><span class="check">✓</span> Unlimited on-site visits</li><li><span class="check">✓</span> System health monitoring</li><li><span class="check">✓</span> After-hours emergency support</li><li><span class="check">✓</span> 6-Month / Annual / Multi-Year</li></ul><a href="#contact" class="pkg-cta">Contact Us for Pricing</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="hero-grid-bg"></div><div class="hero-glow"></div>
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title light">Ready to Upgrade Your Network?</h2>
+        <p>Contact us today for a <strong style="color:var(--orange);">FREE site assessment</strong> and custom quote — no obligation. We'll assess your space and design a system tailored to your needs and budget.</p>
+        <div class="contact-details">
+          <div class="contact-detail"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.28h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.96-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg><span>Call us for a free consultation</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfa6a1a9a08fa6a1bca6a8a7bbbaa1a6a9a6aaabbca0a3babba6a0a1bce1aca0a2">[email&#160;protected]</a></span></div>
+          <div class="contact-detail"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Typical response within 1 business day</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>insightunifiedsolutions.com</span></div>
+        </div>
+      </div>
+      <div class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="John" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+        </div>
+        <div class="form-group"><label>Business Name</label><input type="text" placeholder="Acme Corporation" /></div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" placeholder="john@acme.com" /></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000" /></div>
+        </div>
+        <div class="form-group"><label>Service of Interest</label><select><option value="">Select a service...</option><option>Firewall & Security</option><option>Network Infrastructure</option><option>Surveillance Systems</option><option>IP Camera Solutions</option><option>Access Control</option><option>Multiple Services</option></select></div>
+        <div class="form-group"><label>Tell us about your project</label><textarea placeholder="Briefly describe your space, current setup, and what you're looking to achieve..."></textarea></div>
+        <button class="form-submit">SEND MESSAGE →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">INSIGHT <span>UNIFIED</span> SOLUTIONS</div>
+  <div class="footer-copy">© 2026 Insight Unified Solutions. All rights reserved.</div>
+  <div class="footer-links"><a href="#services">Services</a><a href="#packages">Support</a><a href="#contact">Contact</a></div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links) {
+      const open = links.style.display === 'flex';
+      links.style.display = open ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '68px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = 'rgba(10,22,40,0.98)';
+      links.style.padding = '20px 40px';
+      links.style.gap = '20px';
+      links.style.borderBottom = '2px solid #FF6B1A';
+    }
+  }
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+ 
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id'); });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? '#FF6B1A' : ''; });
+  });
+</script>
+</body>
+</html>
